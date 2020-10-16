@@ -465,7 +465,7 @@ float rnnoise_process_frame(DenoiseState *st, float *out, const float *in) {
   float Ex[NB_BANDS], Ep[NB_BANDS];
   float Exp[NB_BANDS];
   float features[NB_FEATURES];
-  float g[NB_BANDS];
+  float g[NB_BANDS]; //Noise element
   float gf[FREQ_SIZE]={1};
   float vad_prob = 0;
   int silence;
@@ -473,9 +473,12 @@ float rnnoise_process_frame(DenoiseState *st, float *out, const float *in) {
   static const float b_hp[2] = {-2, 1};
   biquad(x, st->mem_hp_x, in, b_hp, a_hp, FRAME_SIZE);
   silence = compute_frame_features(st, X, P, Ex, Ep, Exp, features, x);
-
   if (!silence) {
-    compute_rnn(&st->rnn, g, &vad_prob, features);
+    compute_rnn(&st->rnn, g, &vad_prob, features); //compute_rnn(*rnn, *gains, *vad, *input);
+      //Noise output
+      for(i=0;i<NB_BANDS;i++){
+          g[i] = 1. - g[i];
+      }
     pitch_filter(X, P, Ex, Ep, Exp, g);
     for (i=0;i<NB_BANDS;i++) {
       float alpha = .6f;
@@ -632,7 +635,6 @@ int main(int argc, char **argv) {
     for (i=0;i<NB_BANDS;i++) Ln[i] = log10(1e-2+En[i]);
     int silence = compute_frame_features(noisy, X, P, Ex, Ep, Exp, features, xn);
     pitch_filter(X, P, Ex, Ep, Exp, g);
-    //printf("%f %d\n", noisy->last_gain, noisy->last_period);
     for (i=0;i<NB_BANDS;i++) {
       g[i] = sqrt((Ey[i]+1e-3)/(Ex[i]+1e-3));
       if (g[i] > 1) g[i] = 1;

@@ -1,6 +1,10 @@
 # RNNoise
 A noise suppression library based on a recurrent neural network.
 
+## Change
+
+Output Noise Sound  
+
 ## Build
 
 Prerequisite
@@ -21,6 +25,10 @@ provided as an example. It can be used as:
 ```shell
 examples/rnnoise_demo sample.wav output.wav
 ```
+Sound file info:
+- Samplerate: 48kHz
+- Bitdepth: 16bit
+- Channels: mono
 
 ## Training
 
