@@ -39,6 +39,13 @@ Build audio feature extraction tool
 make src/denoise_training
 ```
 
+Prepare signal.wav, noise.wav
+```shell
+cd wavutils  
+wav2pcm signal.wav signal.raw/signal.pcm
+wav2pcm noise.wav noise.raw/noise.pcm
+```
+
 Use the tool `denoise_training` to get the audio feature array from speech and noise audio clip
 ```shell
 src/denoise_training signal.raw noise.raw 500000 > training.f32
@@ -52,11 +59,18 @@ Pick feature array to "training" dir and go through the training process.
 cd training
 python bin2hdf5.py ../src/training.f32 500000 87 training.h5
 python rnn_train.py
-python dump_rnn.py weights.hdf5 ../src/rnn_data.c ../src/rnn_data.h orig
+python dump_rnn.py weights.hdf5 rnn_data.c rnn_data.txt orig
 ```
 
 Training process will generate the RNN model weight code file (default is `rnn_data.c`) and layer definition header file (default is `rnn_data.h`).
 They can be used to refresh the `src/rnn_data.c`, `src/rnn_data.h` and rebuild the rnnoise library and/or examples.
+
+```shell
+cd ../
+mv training/rnn_data.c src/rnn_data.c
+make clean
+make
+```
 
 ## License
 
