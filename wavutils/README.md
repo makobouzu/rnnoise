@@ -24,7 +24,7 @@ sudo ./install.sh
 pcm2wav channel samplerate bitspersample pcmfile wavfile
 
 # sample
-pcm2wav 2 44100 16 samples/sample1.pcm out.wav
+pcm2wav 1 44100 16 audioSample/input.pcm output.wav
 ```
 
 * wav2pcm - convert wav to pcm
@@ -33,7 +33,7 @@ pcm2wav 2 44100 16 samples/sample1.pcm out.wav
 wav2pcm wavfile pcmfile
 
 #sample
-pcm2wav samples/sample1.wav out.pcm
+pcm2wav audioSample/input.wav output.pcm
 ```
 
 * wavinfo - show information of wav
@@ -42,28 +42,35 @@ pcm2wav samples/sample1.wav out.pcm
 wavinfo wavfile
 
 #sample
-wavinfo samples/sample1.wav
+wavinfo audioSample/input.wav
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 +          WAVEFORM INFORMATION              +
 ++++++++++++++++++++++++++++++++++++++++++++++
     Audio Format:   1 (0x0001)
-    Num Channels:   2 (0x0002)
+    Num Channels:   1 (0x0002)
      Sample Rate:   44100 (0x0000ac44)
  Bits Per Sample:   16 (0x0010)
         PCM Size:   622592 (0x00098000)
 ```
 
-## samples
+* 16kHz-48kHz.py - convert wav(mono, 16kHz, 16bit) to wav(mono, 48kHz, 16bit)  
 
-also I provide some sample files for your test. like follow: 
+```bash
+python 16kHz-48kHz.py folder
 
+#sample
+python 16kHz-48kHz.py audioSample/16kHz
 ```
-samples/
-├── sample1.pcm     - channel: 2  samplerate: 44100 bitspersample: 16
-├── sample1.wav     - channel: 2  samplerate: 44100 bitspersample: 16
-├── sample2.pcm     - channel: 1  samplerate: 8000 bitspersample: 16
-└── sample2.wav     - channel: 1  samplerate: 8000 bitspersample: 16
+
+
+* 441kHz-48kHz.py - convert wav(mono, 44.1kHz, 16bit) to wav(mono, 48kHz, 16bit)  
+
+```bash
+python 441kHz-48kHz.py folder
+
+#sample
+python 441kHz-48kHz.py audioSample/441kHz
 ```
 
 ## license
