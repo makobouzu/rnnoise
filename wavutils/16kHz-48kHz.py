@@ -8,6 +8,7 @@ import wave
 import array
 import struct
 import sys
+import glob
 
 def readWav(filename):
     try:
@@ -53,11 +54,11 @@ def upsampling(conversion_rate,data,fs):
 
 if __name__ == "__main__":
     args = sys.argv
-    
     up_conversion_rate = 3
     
-    FILENAME = args[1]
-    data,fs = readWav(FILENAME)
-    
-    upData,upFs = upsampling(up_conversion_rate,data,fs)
-    writeWav(args[2],upData,upFs)
+    folder = glob.glob(args[1] + "/*.wav")
+    for file in folder:
+        data,fs = readWav(file)
+        upData,upFs = upsampling(up_conversion_rate,data,fs)
+        writeWav(file,upData,upFs)
+        print("resample 16kHz -> 48kHz : " + file)

@@ -41,7 +41,7 @@ make src/denoise_training
 
 Use the tool `denoise_training` to get the audio feature array from speech and noise audio clip
 ```shell
-src/denoise_training signal.raw noise.raw count > training.f32
+src/denoise_training signal.raw noise.raw 500000 > training.f32
 ```
 (note the matrix size and replace 500000 87 below)
 
@@ -49,9 +49,10 @@ src/denoise_training signal.raw noise.raw count > training.f32
 
 Pick feature array to "training" dir and go through the training process.
 ```shell
-cd training ; ./bin2hdf5.py ../src/training.f32 500000 87 training.h5
-./rnn_train.py
-./dump_rnn.py weights.hdf5 ../src/rnn_data.c ../src/rnn_data.h
+cd training
+python bin2hdf5.py ../src/training.f32 500000 87 training.h5
+python rnn_train.py
+python dump_rnn.py weights.hdf5 ../src/rnn_data.c ../src/rnn_data.h orig
 ```
 
 Training process will generate the RNN model weight code file (default is `rnn_data.c`) and layer definition header file (default is `rnn_data.h`).

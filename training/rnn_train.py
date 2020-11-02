@@ -21,6 +21,8 @@ from keras.constraints import Constraint
 from keras import backend as K
 import numpy as np
 
+import sys
+
 #import tensorflow as tf
 #from keras.backend.tensorflow_backend import set_session
 #config = tf.ConfigProto()
@@ -38,7 +40,7 @@ def msse(y_true, y_pred):
     return K.mean(mymask(y_true) * K.square(K.sqrt(y_pred) - K.sqrt(y_true)), axis=-1)
 
 def mycost(y_true, y_pred):
-    return K.mean(mymask(y_true) * (10*K.square(K.square(K.sqrt(y_pred) - K.sqrt(y_true))) + K.square(K.sqrt(y_pred) - K.sqrt(y_true)) + 0.01*K.binary_crossentropy(y_pred, y_true)), axis=-1)
+    return K.mean(mymask(y_true) * (10 * K.square(K.square(K.sqrt(y_pred) - K.sqrt(y_true))) + K.square(K.sqrt(y_pred) - K.sqrt(y_true)) + 0.01 * K.binary_crossentropy(y_pred, y_true)), axis=-1)
 
 def my_accuracy(y_true, y_pred):
     return K.mean(2*K.abs(y_true-0.5) * K.equal(y_true, K.round(y_pred)), axis=-1)
@@ -46,7 +48,7 @@ def my_accuracy(y_true, y_pred):
 class WeightClip(Constraint):
     '''Clips the weights incident to each hidden unit to be inside a range
     '''
-    def __init__(self, c=2):
+    def __init__(self, c=2, name='WeightClip'):
         self.c = c
 
     def __call__(self, p):
@@ -81,8 +83,9 @@ model.compile(loss=[mycost, my_crossentropy],
 
 batch_size = 32
 
+args = sys.argv
 print('Loading data...')
-with h5py.File('training.h5', 'r') as hf:
+with h5py.File(args[1], 'r') as hf:
     all_data = hf['data'][:]
 print('done.')
 
