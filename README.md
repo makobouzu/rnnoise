@@ -39,7 +39,7 @@ Build audio feature extraction tool
 make src/denoise_training
 ```
 
-Prepare signal.wav, noise.wav
+Prepare signal.wav, noise.wav (ex. [microsoft/MS-SNSD](https://github.com/microsoft/MS-SNSD)) 
 ```shell
 cd wavutils  
 wav2pcm signal.wav signal.raw/signal.pcm
