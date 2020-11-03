@@ -73,6 +73,12 @@ python 441kHz-48kHz.py folder
 python 441kHz-48kHz.py audioSample/441kHz
 ```
 
+* noisysignal_synthesizer.py - Create composite wav of signal.wav and noise.wav  
+
+```bash
+python noisysignal_synthesizer.py signal.wav noise.wav noisysignal.wav
+```
+
 ## license
 
 The script follow MIT license.
