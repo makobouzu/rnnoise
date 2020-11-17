@@ -79,6 +79,12 @@ python 441kHz-48kHz.py audioSample/441kHz
 python noisysignal_synthesizer.py signal.wav noise.wav noisysignal.wav
 ```
 
+* wav_connect.py - Combining wav files in a folder  
+
+```bash
+python wav_connect.py folder output.wav
+```
+
 ## license
 
 The script follow MIT license.
