@@ -45,6 +45,10 @@ cd wavutils
 wav2pcm signal.wav signal.raw/signal.pcm
 wav2pcm noise.wav noise.raw/noise.pcm
 ```
+or  
+```shell
+sox "input.wav" -t raw -x "output.raw"
+```  
 
 Use the tool `denoise_training` to get the audio feature array from speech and noise audio clip
 ```shell
